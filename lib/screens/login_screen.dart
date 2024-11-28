@@ -9,17 +9,23 @@ class LoginScreen extends StatelessWidget {
 
   void _login(BuildContext context) async {
     try {
-      final response = await apiService.loginUser(
+      final userData = await apiService.loginUser(
         emailController.text,
         passwordController.text,
       );
-      print('Usuario autenticado: $response');
+      print('Usuario autenticado: $userData');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()), // Ir a HomeScreen después de autenticarse
+        MaterialPageRoute(
+          builder: (context) =>
+              HomeScreen(userData: userData), 
+        ),
       );
     } catch (e) {
       print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al iniciar sesión: $e')),
+      );
     }
   }
 
@@ -35,7 +41,8 @@ class LoginScreen extends StatelessWidget {
           children: [
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: 'Correo Electrónico'),
+              decoration:
+                  const InputDecoration(labelText: 'Correo Electrónico'),
             ),
             const SizedBox(height: 10),
             TextField(

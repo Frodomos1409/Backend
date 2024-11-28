@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl = 'http://10.26.5.70:5000/api'; // Dirección IP del servidor.
+  final String baseUrl = 'http://localhost:5000/api'; // Dirección IP del servidor.
 
-  // **Registrar usuario**
+  // *Registrar usuario*
   Future<Map<String, dynamic>> createUser(Map<String, dynamic> userData) async {
     try {
       final response = await http.post(
@@ -16,17 +16,18 @@ class ApiService {
         return json.decode(response.body); // Usuario creado
       } else {
         throw Exception('Error al registrar usuario: ${_handleError(response)}');
+      
       }
     } catch (error) {
       throw Exception('Error de conexión al registrar usuario: $error');
     }
   }
 
-  // **Login de usuario**
+  // *Login de usuario*
   Future<Map<String, dynamic>> loginUser(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/login'),
+        Uri.parse('$baseUrl/users/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'email': email, 'password': password}),
       );
@@ -42,7 +43,7 @@ class ApiService {
     }
   }
 
-  // **Editar usuario**
+  // *Editar usuario*
   Future<Map<String, dynamic>> editUser(String id, Map<String, dynamic> userData) async {
     try {
       final response = await http.put(
@@ -60,7 +61,7 @@ class ApiService {
     }
   }
 
-  // **Eliminar usuario**
+  // *Eliminar usuario*
   Future<bool> deleteUser(String id) async {
     try {
       final response = await http.delete(
@@ -79,7 +80,8 @@ class ApiService {
     }
   }
 
-  // **Obtener todos los usuarios**
+  
+  // *Obtener todos los usuarios*
   Future<List<Map<String, dynamic>>> getUsers() async {
     try {
       final response = await http.get(
@@ -96,13 +98,13 @@ class ApiService {
     }
   }
 
-  // **Manejador de errores HTTP**
+  // *Manejador de errores HTTP*
   String _handleError(http.Response response) {
     try {
       final errorBody = json.decode(response.body);
       return errorBody['message'] ?? 'Error desconocido';
     } catch (e) {
       return response.body.isNotEmpty ? response.body : 'Error desconocido';
-    }
+      }
   }
 }

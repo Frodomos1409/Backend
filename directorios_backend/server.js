@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(cors({
-  origin: ['http://10.26.5.70:5000', 'http://localhost:5000'], // Ajusta los puertos según sea necesario.
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

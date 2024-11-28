@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key, required this.userData}) : super(key: key);
+  final Map<String, dynamic> userData;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,11 @@ class HomeScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ProfileScreen(
-                    userId: '12345', // Proporciona el userId necesario
-                    nombre: 'Brillo Antelo Roncales',
-                    telefono: '123456789',
-                    institucion: 'FPSC',
-                    residencia: 'Santa Cruz, Bolivia',
+                    userId: userData['_id'],
+                    nombre: userData['nombre'], 
+                    telefono: userData['phone'],
+                    institucion: userData['institution'],
+                    residencia: userData['residence'],
                   ),
                 ),
               );
@@ -31,9 +32,9 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Bienvenido Brillo Antelo Roncales'),
+      body: Center(
+        child: Text('Bienvenido, ${userData['nombre']}'), // Cambiado a 'nombre'
       ),
-    );
-  }
+   );
+ }
 }
