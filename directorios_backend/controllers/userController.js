@@ -4,14 +4,15 @@ const bcrypt = require('bcryptjs');
 // **Crear usuario**
 exports.createUser = async (req, res) => {
   try {
-    // Hashear la contraseña antes de guardarla
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    // Crear el usuario con la contraseña hasheada
     const user = new User({
-      ...req.body,
-      password: hashedPassword // Establecer la contraseña hasheada
+      nombre: req.body.nombre,
+      email: req.body.email,
+      password: hashedPassword,
+      estadoCredencial: req.body.estadoCredencial || "Activo", // Valor por defecto
+      cargo: req.body.cargo || "Sin definir", // Valor por defecto
     });
 
     await user.save();
@@ -20,6 +21,7 @@ exports.createUser = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 // **Login de usuario**
 exports.loginUser = async (req, res) => {
