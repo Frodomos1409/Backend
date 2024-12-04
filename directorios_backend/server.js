@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
+const institutionRoutes = require('./routes/institutionRoutes'); // Importa las rutas de Instituciones
+const federationRoutes = require('./routes/federationRoutes'); // Importa las rutas de Federaciones
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,9 +31,10 @@ mongoose
     console.error('Error al conectar a MongoDB:', error.message);
   });
 
-
 // Rutas
 app.use('/api/users', userRoutes);
+app.use('/api/institutions', institutionRoutes); // Rutas para Instituciones
+app.use('/api/federations', federationRoutes); // Rutas para Federaciones
 
 // Ruta base
 app.get('/', (req, res) => {
