@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 
-// Definir el esquema de la institución
+// Define the Institution schema
 const institutionSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },  // El nombre debe ser único
+  name: { type: String, required: true, unique: true },  // Name must be unique
   address: { type: String, required: false },
-  federation: { type: mongoose.Schema.Types.ObjectId, ref: 'Federation', required: true }, // Referencia a la colección 'Federation'
+  latitud: { type: Number, required: false },  // Latitude of the institution
+  longitud: { type: Number, required: false }, // Longitude of the institution
+  paginaWeb: { type: String, required: false },  // Website URL of the institution
+  federation: { type: mongoose.Schema.Types.ObjectId, ref: 'Federation', required: true }, // Reference to the 'Federation' collection
 }, { timestamps: true });
 
-// Crear o usar el modelo 'Institution', si ya existe
+// Create or use the 'Institution' model if it already exists
 module.exports = mongoose.models.Institution || mongoose.model('Institution', institutionSchema);

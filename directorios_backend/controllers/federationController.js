@@ -3,8 +3,25 @@ const Federation = require('../models/Federation');
 // **Crear federación**
 exports.createFederation = async (req, res) => {
   try {
-    const federation = new Federation(req.body);
+    const { name, description, email, telefono } = req.body;
+
+    // Validamos los campos requeridos
+    if (!name || !email || !telefono) {
+      return res.status(400).json({ message: 'Los campos nombre, email y teléfono son obligatorios' });
+    }
+
+    // Creamos la federación
+    const federation = new Federation({
+      name,
+      description,
+      email,
+      telefono,
+    });
+
+    // Guardamos la federación
     await federation.save();
+    
+    // Enviamos la respuesta con la federación creada
     res.status(201).json(federation);
   } catch (error) {
     res.status(400).json({ message: error.message });

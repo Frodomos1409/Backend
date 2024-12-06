@@ -4,17 +4,6 @@ const Institution = require('../models/Institution'); // Asegúrate de que la ru
 // Crear un nuevo usuario
 exports.createUser = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-    const user = new User({
-      nombre: req.body.nombre,
-      email: req.body.email,
-      password: hashedPassword,
-      estadoCredencial: req.body.estadoCredencial || "Activo", // Valor por defecto
-      cargo: req.body.cargo || "Sin definir", // Valor por defecto
-=======
     const { institutionName, email, password, name } = req.body;
 
     // Verificar si institutionName está presente
@@ -46,7 +35,6 @@ exports.createUser = async (req, res) => {
       email,
       password,
       institution: institution._id,  // Asociar el ObjectId de la institución
->>>>>>> 8979238 (Trabajen)
     });
 
     await user.save();
@@ -57,12 +45,6 @@ exports.createUser = async (req, res) => {
   }
 };
 
-
-<<<<<<< HEAD
-// **Login de usuario**
-=======
-// Login de usuario
->>>>>>> 8979238 (Trabajen)
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
